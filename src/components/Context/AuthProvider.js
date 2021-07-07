@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { auth } from "../../firebase/config";
 import { Spin } from "antd";
 
-export const authContext = React.createContext();
+export const AuthContext = React.createContext();
 const AuthProvider = ({ children }) => {
   const history = useHistory();
   const [user, setUser] = useState({});
@@ -11,12 +11,12 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribed = auth.onAuthStateChanged((user) => {
       if (user) {
-        const { displayName, email, uid, photoUrl } = user;
+        const { displayName, email, uid, photoURL } = user;
         setUser({
           displayName,
           email,
           uid,
-          photoUrl,
+          photoURL,
         });
         setIsLoading(false);
         history.push("/");
@@ -33,9 +33,9 @@ const AuthProvider = ({ children }) => {
   }, [history]);
 
   return (
-    <authContext.Provider value={user}>
+    <AuthContext.Provider value={user}>
       {isLoading ? <Spin /> : <div>{children}</div>}
-    </authContext.Provider>
+    </AuthContext.Provider>
   );
 };
 

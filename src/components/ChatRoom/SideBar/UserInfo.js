@@ -1,13 +1,17 @@
 import { Avatar, Button, Typography } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { auth } from "../../../firebase/config";
+import { auth, db } from "../../../firebase/config";
+import { AuthContext } from "../../Context/AuthProvider";
 const UserInfo = () => {
+  const { displayName, photoURL } = React.useContext(AuthContext);
   return (
     <WrapperStyled>
       <div>
-        <Avatar src={"a"} />
-        <Typography.Text className="username">ABC</Typography.Text>
+        <Avatar src={photoURL}>
+          {photoURL ? "" : displayName?.toUpperCase()}
+        </Avatar>
+        <Typography.Text className="username">{displayName}</Typography.Text>
       </div>
       <Button
         ghost
