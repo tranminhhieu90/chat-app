@@ -7,7 +7,7 @@ const useFirestore = (collection, condition) => {
     if (condition) {
       if (!condition.compareValue || condition.compareValue.length === 0)
         return;
-      collectionRef.where(
+      collectionRef = collectionRef.where(
         condition.fieldName,
         condition.operator,
         condition.compareValue
@@ -18,8 +18,9 @@ const useFirestore = (collection, condition) => {
         ...doc.data(),
         id: doc.id,
       }));
+      setDocuments(documents);
     });
-    setDocuments(documents);
+
     return unSubscribed;
   }, [collection, condition]);
 
