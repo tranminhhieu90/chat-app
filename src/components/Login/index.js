@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Typography, Button } from "antd";
-import firebase, { auth, db } from "../../firebase/config";
-import { addDocument } from "../../firebase/services";
+import firebase, { auth } from "../../firebase/config";
+import { addDocument, generateKeywords } from "../../firebase/services";
 const { Title } = Typography;
 const fbProvider = new firebase.auth.FacebookAuthProvider();
 
@@ -12,9 +12,10 @@ function Login(props) {
       addDocument("users", {
         displayName: user.displayName,
         email: user.email,
-        photoURl: user.photoURL,
+        photoURL: user.photoURL,
         uid: user.uid,
         provider: additionalUserInfo.providerId,
+        keywords: generateKeywords(user.displayName?.toLowerCase()),
       });
     }
   };

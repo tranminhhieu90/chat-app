@@ -2,7 +2,7 @@ import { Collapse, Typography, Button } from "antd";
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { PlusSquareOutlined } from "@ant-design/icons";
-import { AppContext } from "../../Context/AppProvider";
+import { AppContext } from "../../../Context/AppProvider";
 const { Panel } = Collapse;
 
 const RoomList = () => {

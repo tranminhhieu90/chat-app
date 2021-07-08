@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { auth } from "../../firebase/config";
+import { auth } from "../firebase/config";
 import { Spin } from "antd";
 
 export const AuthContext = React.createContext();
-const AuthProvider = ({ children }) => {
+export default function AuthProvider({ children }) {
   const history = useHistory();
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -20,10 +20,11 @@ const AuthProvider = ({ children }) => {
         });
         setIsLoading(false);
         history.push("/");
-      } else {
-        setIsLoading(false);
-        history.push("/login");
+        return;
       }
+      setUser({});
+      setIsLoading(false);
+      history.push("/login");
     });
 
     //clean function
@@ -31,12 +32,9 @@ const AuthProvider = ({ children }) => {
       unSubscribed();
     };
   }, [history]);
-
   return (
-    <AuthContext.Provider value={user}>
-      {isLoading ? <Spin /> : <div>{children}</div>}
+    <AuthContext.Provider value={{ user }}>
+      {isLoading ? <Spin /> : children}
     </AuthContext.Provider>
   );
-};
-
-export default AuthProvider;
+}

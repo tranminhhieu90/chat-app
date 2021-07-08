@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import { Form, Input, Modal } from "antd";
-import { AppContext } from "../components/Context/AppProvider";
 import { addDocument } from "../firebase/services";
-import { AuthContext } from "../components/Context/AuthProvider";
+import { AppContext } from "../Context/AppProvider";
+import { AuthContext } from "../Context/AuthProvider";
 export default function AddRoomModal() {
   const { isAddRoomVisible, setIsAddRoomVisible } = useContext(AppContext);
-  const { uid } = useContext(AuthContext);
+  const {
+    user: { uid },
+  } = useContext(AuthContext);
   const [form] = Form.useForm();
   const handleOk = () => {
     // add new room to firebase

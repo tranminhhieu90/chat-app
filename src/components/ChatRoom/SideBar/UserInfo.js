@@ -1,10 +1,14 @@
 import { Avatar, Button, Typography } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { auth, db } from "../../../firebase/config";
-import { AuthContext } from "../../Context/AuthProvider";
+import { AppContext } from "../../../Context/AppProvider";
+import { AuthContext } from "../../../Context/AuthProvider";
+import { auth } from "../../../firebase/config";
 const UserInfo = () => {
-  const { displayName, photoURL } = React.useContext(AuthContext);
+  const {
+    user: { displayName, photoURL },
+  } = React.useContext(AuthContext);
+  const { clearState } = React.useContext(AppContext);
   return (
     <WrapperStyled>
       <div>
@@ -16,6 +20,7 @@ const UserInfo = () => {
       <Button
         ghost
         onClick={() => {
+          clearState();
           auth.signOut();
         }}
       >
